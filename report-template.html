@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequence Analysis Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .plot {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .plot img {
+            max-width: 100%;
+            height: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sequence Analysis Report</h1>
+            <p>Generated on: {{ date }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Summary Statistics</h2>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Number of Sequences</td>
+                    <td>{{ sequence_stats.count }}</td>
+                </tr>
+                <tr>
+                    <td>Average Length</td>
+                    <td>{{ "%.2f"|format(sequence_stats.avg_length) }}</td>
+                </tr>
+                <tr>
+                    <td>Length Standard Deviation</td>
+                    <td>{{ "%.2f"|format(sequence_stats.std_length) }}</td>
+                </tr>
+                <tr>
+                    <td>Random Forest Score</td>
+                    <td>{{ "%.2f"|format(analysis_results.rf_score) }}</td>
+                </tr>
+                <tr>
+                    <td>Neural Network Score</td>
+                    <td>{{ "%.2f"|format(analysis_results.nn_score) }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Feature Importance Analysis</h2>
+            <div class="plot">
+                <img src="{{ plot_paths.feature_importance }}" alt="Feature Importance Plot">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Interpretation</h2>
+            <p>Model Performance Interpretation:</p>
+            <ul>
+                <li>Random Forest Score: {% if analysis_results.rf_score > 0.8 %}High accuracy in distinguishing sequences{% else %}Moderate accuracy in sequence classification{% endif %}</li>
+                <li>Neural Network Score: {% if analysis_results.nn_score > 0.8 %}Strong sequence pattern recognition{% else %}Room for improvement in pattern detection{% endif %}</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
